@@ -50,7 +50,7 @@ First, I created a simple linear model to see how well it could predict fuel con
 > **R²** measures how well the model explains the variance (higher is better)
 > **MSE** measures the average squared prediction error (lower is better)
 
-The **residual plot** showed a pattern -> the linear model likely underfits.  
+The **residual plot** revealed a clear pattern, indicating that the linear model likely underfits the data.
 The **KDE plot** also revealed a mismatch between predictions and actual values.
 
 **Residual Analysis:**
@@ -79,7 +79,7 @@ The following plot shows how R² increases and MSE decreases up to degree 5:
 
 **Residual and KDE plots for degrees 2–7:**
 
-**Residual Analysis:**: The residuals became narrower and more centered, subtle curved patterns still remain. Even though these models achieve much better R² and MSE values, the non-random structure of the residuals suggests that not all variance is captured cleanly, and some nonlinear interactions or noise remain unmodeled.
+**Residual Analysis:**: The residuals became narrower and more centered, subtle curved patterns still remain. Even though these models achieve much better R² and MSE values, the remaining structure in the residuals suggests that not all variance is fully captured, and some nonlinear effects or noise remain.
 
 ![Poly deg 2](plots/kde_resid_degree_2.png)
 ![Poly deg 3](plots/kde_resid_degree_3.png)
@@ -115,11 +115,8 @@ GridSearchCV tested various alpha values and selected the one that best balances
 
 This model generalizes better and reduces overfitting without sacrificing much accuracy.
 
-**Residual Analysis:**: 
-In contrast to the plain polynomial models, the residuals show a much more random distribution.
-There is no clear curved pattern anymore. The spread is more homogeneous across the prediction range.
-Extreme values and outliers appear less clustered. This suggests that Ridge regularization has effectively reduced overfitting and forced the model to generalize better.
-Compared to the plain degree-2 polynomial regression, this version achieves similar predictive accuracy but with much more stable residuals.
+**Residual Analysis:**  
+Compared to the plain polynomial models, the residuals of the Ridge model show a much more random and homoscedastic distribution. There is no visible curved pattern, and the spread is fairly uniform across the range of predicted values. This indicates that Ridge regularization effectively reduced overfitting and led to better generalization, without significantly compromising accuracy.
 
 📉 This is exactly what regularization is supposed to do:
 Balance flexibility with generalization by shrinking coefficients and avoiding excessive curvature.
@@ -135,8 +132,9 @@ Balance flexibility with generalization by shrinking coefficients and avoiding e
 
 ## ✅ Conclusion
 
-Although Ridge Regression with α = 10 achieved a similar fit to higher-degree polynomial models on training data,  
-its **cross-validation R² score of 0.89** showed it is **less prone to overfitting** and thus more reliable on unseen data.
+Although Ridge Regression with α = 10 achieved a fit comparable to higher-degree polynomial models on the training data,
+its **cross-validation R² score of 0.89** indicates that it is **less prone to overfitting** and therefore more reliable on **unseen data**.
 
-> **Final verdict**:  
-> Ridge Regression (degree 2, α = 10) was the best tradeoff between accuracy and generalization.
+**Best overall model:**
+Ridge Regression (degree 2, α = 10) provided the best trade-off between accuracy and generalization –
+combining strong predictive performance with improved robustness.
